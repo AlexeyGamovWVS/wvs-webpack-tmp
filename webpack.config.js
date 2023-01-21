@@ -6,6 +6,8 @@ const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const FileManagerPlugin = require("filemanager-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const webpackDashboard = require('webpack-dashboard/plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
+
 
 
 const PAGES = ["index", "about"];
@@ -67,7 +69,8 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        use: "babel-loader",
+        enforce: "pre",
+        use: ["babel-loader", "source-map-loader"],
         exclude: "/node_modules/",
       },
       {
@@ -176,6 +179,7 @@ module.exports = {
       },
     }),
     new webpackDashboard(),
+    new ESLintPlugin(),
     // <- here goes array(s) of other plugins
   ),
 };
