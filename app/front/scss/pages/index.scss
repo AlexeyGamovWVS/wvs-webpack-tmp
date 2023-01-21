@@ -65,3 +65,10 @@ body {
   height: 100px;
   background-image: url(../../../images/webpack_thumbnail.png);
 }
+
+.video {
+  display: block;
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+}

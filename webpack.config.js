@@ -2,6 +2,11 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
+const FileManagerPlugin = require("filemanager-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
+const webpackDashboard = require('webpack-dashboard/plugin');
+
 
 const PAGES = ["index", "about"];
 
@@ -10,17 +15,39 @@ module.exports = {
     config[page] = `./app/front/js/pages/${page}.js`;
     return config;
   }, {}),
+  devtool: 'inline-source-map',
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "scripts/[name].[contenthash].js",
-    library: '[name]',
+    library: "[name]",
     publicPath: "",
     assetModuleFilename: path.join("resources", "[name].[contenthash][ext]"),
   },
   optimization: {
+    minimize: true,
     splitChunks: {
       chunks: "all",
     },
+    minimizer: [
+      new ImageMinimizerPlugin({
+        minimizer: {
+          implementation: ImageMinimizerPlugin.imageminMinify,
+          options: {
+            plugins: [
+              ["gifsicle", { interlaced: true }],
+              ["jpegtran", { progressive: true }],
+              ["optipng", { optimizationLevel: 5 }],
+              ["svgo", { name: "preset-default" }],
+            ],
+          },
+        },
+      }),
+      new TerserPlugin({
+        terserOptions: { format: { comments: false } },
+        extractComments: false,
+        parallel: true,
+      }),
+    ],
   },
   mode: "development",
   devServer: {
@@ -32,9 +59,23 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.html$/i,
+        loader: "html-loader",
+        options: {
+          sources: true,
+        },
+      },
+      {
         test: /\.js$/,
         use: "babel-loader",
         exclude: "/node_modules/",
+      },
+      {
+        test: /\.mp4$/,
+        type: "asset/resource",
+        generator: {
+          filename: path.join("resources/videos", "[name].[contenthash][ext]"),
+        },
       },
       {
         test: /\.(png|jpg|jpeg|gif)$/,
@@ -66,7 +107,7 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              publicPath: '../'
+              publicPath: "../",
             },
           },
           {
@@ -90,17 +131,51 @@ module.exports = {
   plugins: [].concat(
     PAGES.map(
       (page) =>
-        new HtmlWebpackPlugin({
-          inject: true,
-          template: `./app/${page}.html`,
-          filename: `${page}.html`,
-          chunks: [page],
-        })
+        new HtmlWebpackPlugin(
+          Object.assign(
+            {},
+            {
+              inject: true,
+              template: `./app/${page}.html`,
+              filename: `${page}.html`,
+              chunks: [page],
+            },
+            process.env.NODE_ENV === "production"
+              ? {
+                  minify: {
+                    removeComments: true,
+                    collapseWhitespace: true,
+                    removeRedundantAttributes: true,
+                    useShortDoctype: true,
+                    removeEmptyAttributes: true,
+                    removeStyleLinkTypeAttributes: true,
+                    keepClosingSlash: true,
+                    minifyJS: true,
+                    minifyCSS: true,
+                    minifyURLs: true,
+                  },
+                }
+              : undefined
+          )
+        )
     ),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: path.join(`styles/`, `[name].[contenthash].css`),
-    })
+    }),
+    new FileManagerPlugin({
+      events: {
+        onEnd: {
+          copy: [
+            {
+              source: path.join("app", "static"),
+              destination: "dist",
+            },
+          ],
+        },
+      },
+    }),
+    new webpackDashboard(),
     // <- here goes array(s) of other plugins
   ),
 };
