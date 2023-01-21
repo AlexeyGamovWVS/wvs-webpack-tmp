@@ -1,0 +1,67 @@
+@import '../utils/utils';
+$font-color: white;
+body {
+  background-color: #121212;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  row-gap: 40px;
+  position: relative;
+}
+.title {
+  margin-top: 10%;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-size: 48px;
+  color: $font-color;
+}
+.subtitle {
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  color: $font-color;
+  opacity: .7;
+}
+.link {
+  color: $font-color;
+  text-decoration: none;
+  font-size: 24px;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-weight: 900;
+  transition: opacity .3s ease;
+  &:hover {
+    text-decoration: underline;
+    opacity: .7;
+  }
+}
+.thumbnail {
+  display: block;
+  width: 100%;
+  max-width: 640px;
+  object-fit: contain;
+  margin: auto;
+}
+.logo {
+  position: absolute;
+  left: 80px;
+  top: 20px;
+  width: 100px;
+  object-fit: contain;
+}
+.container {
+  width: 100%;
+}
+@media screen and (max-width: 640px) {
+  .logo {
+    transform: translate(-50%, 0);
+    left: 50%;
+    top: 40px;
+  }
+  .title {
+    margin-top: 200px;
+  }
+}
+.additional-test {
+  background: #000;
+  width: 100px;
+  height: 100px;
+  background-image: url(../../../images/webpack_thumbnail.png);
+}

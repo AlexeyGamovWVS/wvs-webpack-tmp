@@ -3,10 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-const PAGES = [
-  "index",
-  "about",
-];
+const PAGES = ["index", "about"];
 
 module.exports = {
   entry: PAGES.reduce((config, page) => {
@@ -15,8 +12,10 @@ module.exports = {
   }, {}),
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "scripts/[name].js",
+    filename: "scripts/[name].[contenthash].js",
+    library: '[name]',
     publicPath: "",
+    assetModuleFilename: path.join("resources", "[name].[contenthash][ext]"),
   },
   optimization: {
     splitChunks: {
@@ -38,20 +37,52 @@ module.exports = {
         exclude: "/node_modules/",
       },
       {
-        test: /\.(png|svg|jpg|jpeg|gif|woff(2)?|eot|ttf|otf)$/,
+        test: /\.(png|jpg|jpeg|gif)$/,
         type: "asset/resource",
+        generator: {
+          filename: path.join("resources/images", "[name].[contenthash][ext]"),
+        },
       },
       {
-        test: /\.css$/,
+        test: /\.svg$/,
+        type: "asset/resource",
+        generator: {
+          filename: path.join(
+            "resources/images/svg",
+            "[name].[contenthash][ext]"
+          ),
+        },
+      },
+      {
+        test: /\.(woff(2)?|eot|ttf|otf)$/,
+        type: "asset/resource",
+        generator: {
+          filename: path.join("resources/fonts", "[name].[contenthash][ext]"),
+        },
+      },
+      {
+        test: /\.(scss|css)$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: '../'
+            },
+          },
           {
             loader: "css-loader",
             options: {
               importLoaders: 1,
             },
           },
-          "postcss-loader",
+          { loader: "postcss-loader" },
+          { loader: "resolve-url-loader" },
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: true,
+            },
+          },
         ],
       },
     ],
@@ -67,7 +98,9 @@ module.exports = {
         })
     ),
     new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin({
+      filename: path.join(`styles/`, `[name].[contenthash].css`),
+    })
     // <- here goes array(s) of other plugins
   ),
 };
