@@ -1,0 +1,38 @@
+@font-face {
+  font-family: "Inter";
+  src: url(./Inter/Inter-Regular.woff) format("woff"),
+    url(./Inter/Inter-Regular.woff2) format("woff2"),
+    url("./Inter/Inter-Regular.eot") format("eot");
+  src: local("Inter Regular"), local("Inter-Regular"),
+    url("./Inter/Inter-Regular.eot?#iefix") format("embedded-opentype"),
+    url("./Inter/Inter-Regular.woff") format("woff"),
+    url("./Inter/Inter-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url(./Inter/Inter-Mediun.woff) format("woff"),
+    url(./Inter/Inter-Mediun.woff2) format("woff2"),
+    url("./Inter/Inter-Mediun.eot") format("eot");
+  src: local("Inter Mediun"), local("Inter-Mediun"),
+    url("./Inter/Inter-Mediun.eot?#iefix") format("embedded-opentype"),
+    url("./Inter/Inter-Mediun.woff") format("woff"),
+    url("./Inter/Inter-Mediun.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url(./Inter/Inter-Black.woff) format("woff"),
+    url(./Inter/Inter-Black.woff2) format("woff2"),
+    url("./Inter/Inter-Black.eot") format("eot");
+  src: local("Inter Black"), local("Inter-Black"),
+    url("./Inter/Inter-Black.eot?#iefix") format("embedded-opentype"),
+    url("./Inter/Inter-Black.woff") format("woff"),
+    url("./Inter/Inter-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
