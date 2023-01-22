@@ -1,5 +1,5 @@
-import '../utils/utils';
+import "../utils/utils";
+import "../../scss/pages/index.scss";
 
-import '../../scss/pages/index.scss'
-console.log('I am index script');
-console.log('vasya');
+console.log("I am index script");
+console.log("vasya");

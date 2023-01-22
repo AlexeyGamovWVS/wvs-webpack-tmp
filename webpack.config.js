@@ -5,19 +5,18 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const FileManagerPlugin = require("filemanager-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
-const webpackDashboard = require('webpack-dashboard/plugin');
-const ESLintPlugin = require('eslint-webpack-plugin');
-
-
+const WebpackDashboard = require("webpack-dashboard/plugin");
+const ESLintPlugin = require("eslint-webpack-plugin");
 
 const PAGES = ["index", "about"];
 
 module.exports = {
   entry: PAGES.reduce((config, page) => {
+    // eslint-disable-next-line no-param-reassign
     config[page] = `./app/front/js/pages/${page}.js`;
     return config;
   }, {}),
-  devtool: 'inline-source-map',
+  devtool: "inline-source-map",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "scripts/[name].[contenthash].js",
@@ -135,6 +134,7 @@ module.exports = {
     PAGES.map(
       (page) =>
         new HtmlWebpackPlugin(
+          // eslint-disable-next-line prefer-object-spread
           Object.assign(
             {},
             {
@@ -178,8 +178,8 @@ module.exports = {
         },
       },
     }),
-    new webpackDashboard(),
-    new ESLintPlugin(),
+    new WebpackDashboard(),
+    new ESLintPlugin()
     // <- here goes array(s) of other plugins
   ),
 };

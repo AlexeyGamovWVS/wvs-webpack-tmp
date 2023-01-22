@@ -1,4 +1,17 @@
 {
   "parser": "@babel/eslint-parser",
-  "rules": {}
+  "extends": ["airbnb", "prettier"],
+  "plugins": ["prettier"],
+  "rules": {
+    // "no-console": "off",
+    "no-restricted-syntax": [
+      "error",
+      {
+          "selector": "CallExpression[callee.object.name='console'][callee.property.name!=/^(log|warn|error|info|trace)$/]",
+          "message": "Unexpected property on console object was called"
+      }
+  ],
+    "prettier/prettier": ["error"],
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
+  }
 }

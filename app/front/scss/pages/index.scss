@@ -1,4 +1,4 @@
-@import '../utils/utils';
+@import "../utils/utils";
 $font-color: white;
 body {
   background-color: #121212;
@@ -10,26 +10,26 @@ body {
 }
 .title {
   margin-top: 10%;
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
   font-size: 48px;
   color: $font-color;
 }
 .subtitle {
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
   font-size: 20px;
   color: $font-color;
-  opacity: .7;
+  opacity: 0.7;
 }
 .link {
   color: $font-color;
   text-decoration: none;
   font-size: 24px;
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
   font-weight: 900;
-  transition: opacity .3s ease;
+  transition: opacity 0.3s ease;
   &:hover {
     text-decoration: underline;
-    opacity: .7;
+    opacity: 0.7;
   }
 }
 .thumbnail {

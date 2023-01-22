@@ -1,1 +1,1 @@
-console.log('I am utils script');
+console.log("I am utils script");
