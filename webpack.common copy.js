@@ -1,61 +1,26 @@
+/* eslint-disable import/prefer-default-export */
+/* eslint-disable no-param-reassign */
+/* eslint-disable import/no-extraneous-dependencies */
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
-const FileManagerPlugin = require("filemanager-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
-const WebpackDashboard = require("webpack-dashboard/plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
-
-const PAGES = ["index", "about"];
+const FileManagerPlugin = require("filemanager-webpack-plugin");
+const WebpackDashboard = require("webpack-dashboard/plugin");
+const PAGES = require("./entries.config");
 
 module.exports = {
   entry: PAGES.reduce((config, page) => {
-    // eslint-disable-next-line no-param-reassign
     config[page] = `./app/front/js/pages/${page}.js`;
     return config;
   }, {}),
-  devtool: "inline-source-map",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "scripts/[name].[contenthash].js",
     library: "[name]",
     publicPath: "",
     assetModuleFilename: path.join("resources", "[name].[contenthash][ext]"),
-  },
-  optimization: {
-    minimize: true,
-    splitChunks: {
-      chunks: "all",
-    },
-    minimizer: [
-      new ImageMinimizerPlugin({
-        minimizer: {
-          implementation: ImageMinimizerPlugin.imageminMinify,
-          options: {
-            plugins: [
-              ["gifsicle", { interlaced: true }],
-              ["jpegtran", { progressive: true }],
-              ["optipng", { optimizationLevel: 5 }],
-              ["svgo", { name: "preset-default" }],
-            ],
-          },
-        },
-      }),
-      new TerserPlugin({
-        terserOptions: { format: { comments: false } },
-        extractComments: false,
-        parallel: true,
-      }),
-    ],
-  },
-  mode: "development",
-  devServer: {
-    static: path.resolve(__dirname, "./dist"),
-    open: true,
-    compress: true,
-    port: 8080,
   },
   module: {
     rules: [
@@ -115,11 +80,11 @@ module.exports = {
           {
             loader: "css-loader",
             options: {
-              importLoaders: 1,
+              importLoaders: 3,
             },
           },
-          { loader: "postcss-loader" },
-          { loader: "resolve-url-loader" },
+          "postcss-loader",
+          "resolve-url-loader",
           {
             loader: "sass-loader",
             options: {
