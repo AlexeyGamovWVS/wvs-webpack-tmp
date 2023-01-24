@@ -2,11 +2,12 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable import/no-extraneous-dependencies */
 const path = require("path");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const FileManagerPlugin = require("filemanager-webpack-plugin");
 const WebpackDashboard = require("webpack-dashboard/plugin");
+const DuplicatePackageCheckerPlugin = require("duplicate-package-checker-webpack-plugin");
 const PAGES = require("./entries.config");
 
 module.exports = {
@@ -113,6 +114,7 @@ module.exports = {
     }),
     new WebpackDashboard(),
     new ESLintPlugin(),
+    new DuplicatePackageCheckerPlugin(),
     // <- here goes array(s) of other plugins
   ],
 };

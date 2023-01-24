@@ -31,7 +31,7 @@ module.exports = merge(common, {
         },
       }),
       new TerserPlugin({
-        terserOptions: { format: { comments: false } },
+        terserOptions: { compress: true, format: { comments: false } },
         extractComments: false,
         parallel: true,
       }),
