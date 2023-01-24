@@ -3,6 +3,7 @@
   "version": "1.1.0",
   "description": "Template for fast start coding. Made by WebValley Studio",
   "main": "index.js",
+  "homepage": "https://alexeygamovwvs.github.io/wvs-webpack-tmp/",
   "scripts": {
     "dbbuild": "webpack-dashboard -- webpack --config webpack.prod.js",
     "dbdev": "webpack-dashboard -- webpack serve --config webpack.dev.js",
