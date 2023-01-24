@@ -1,6 +1,6 @@
 # WVS Multipage Webpack Tmp v.1.1.0
 
-Production-ready Webpack starter.
+Fast programming Webpack starter.
 WVS Webpack Tmp - startup environment for developing websites and multipage websites with splited scripts and styles accordingly to each page. This environment optimized for building and have different configs for developing and production mods. It includes webpack 5, Preprocessor — Scss, cssnano, Browsersync, PostCSS, Autoprefixer, Babel, imagemin and many others. It uses best practices of images compression, JavaScript, CSS optimizing, working with html and includes some feachers, wich simplify developing.
 
 Made by Alexey Gamov, [WebValley Studio](https://web-valley.ru/)
