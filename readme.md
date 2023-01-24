@@ -15,7 +15,7 @@ Clone into the current folder and remove all unnecessary files. Use
 git clone git@github.com:AlexeyGamovWVS/wvs-webpack-tmp.git
 ```
 
-1. Clone or [Download](https://github.com/AlexeyGamovWVS/wvs-webpack-tmp/archive/refs/heads/main.zip) WVS Webpack Tmp 5 from GitHub
+1. Clone or [Download](https://github.com/AlexeyGamovWVS/wvs-webpack-tmp/archive/refs/heads/main.zip) WVS Webpack Tmp from GitHub
 2. Install Node Modules: npm i
 3. Run: <strong>npm run dev</strong>
 
