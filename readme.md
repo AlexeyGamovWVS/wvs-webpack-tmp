@@ -23,11 +23,11 @@ git clone git@github.com:AlexeyGamovWVS/wvs-webpack-tmp.git
 
 - <strong>preprocessor:</strong> Only SCSS preprocessor. Works with the Scss syntax in "app/front/scss" import folder
 - <strong>imagemin:</strong> Works with png, jpeg, jpg, gif, svg files without loss of quality
-- <strong>entries:</strong> All entries should be placed in "front/js/pages" with name: <strong>[page-name].js, and the urls to this files should be placed in <strong>entries.config.js</strong> (watch this files for getting example)
+- <strong>entries:</strong> All entries should be placed in "front/js/pages" with name: <strong>[page-name].js</strong>, and the urls to this files should be placed in <strong>entries.config.js</strong> (watch this files for getting example)
 - <strong>import SCSS:</strong> You should import SCSS-files to main pages .js files. Use <strong>import: '../some-url'</strong>
-- <strong>outputs</strong> All processed files will be placed in <strong>dist/</strong> directory accordingly to simple folders structure.
-- <strong>assets</<strong> All assets, scripts and CSS will be automaticly added to neccessary files. You needn't use <strong><=require src=...></strong> at all =)
-- <strong>Non processed files:</<strong> Files like robots.txt should be placed in app/static. Webpack will copy that files to dist/
+- <strong>outputs:</strong> All processed files will be placed in <strong>dist/</strong> directory accordingly to simple folders structure.
+- <strong>assets:</strong> All assets, scripts and CSS will be automaticly added to neccessary files. You needn't use <strong><=require src=...></strong> at all =)
+- <strong>Non processed files:</strong> Files like robots.txt should be placed in app/static. Webpack will copy that files to dist/
 
 ### Configs
 
