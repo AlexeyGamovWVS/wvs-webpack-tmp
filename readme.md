@@ -1,4 +1,4 @@
-# WVS Multipage Webpack Tmp v.1.1.0
+# WVS Multipage Webpack Tmp v.2.0.0
 
 Fast programming Webpack starter.
 WVS Webpack Tmp - startup environment for developing websites and multipage websites with splited scripts and styles accordingly to each page. This environment optimized for building and have different configs for developing and production mods. It includes webpack 5, Preprocessor — Scss, cssnano, Browsersync, PostCSS, Autoprefixer, Babel, imagemin and many others. It uses best practices of images compression, JavaScript, CSS optimizing, working with html and includes some feachers, wich simplify developing.
@@ -31,10 +31,9 @@ git clone git@github.com:AlexeyGamovWVS/wvs-webpack-tmp.git
 
 ### Configs
 
-We have 3 webpack configs wich use different features and level of code optimization:
+We have 2 webpack configs wich use different features and level of code optimization:
 
-- <strong>webpack.common.js:</strong> In this file you can find common webpack options, wich are used in both (dev and prod) modes.
-* <strong>webpack.dev.js:</strong> This is simple configuration for dev mode, wich used webpack-dev-server with hot replacement and without compressing and difficult processing. Merged with webpack.common.js
+* <strong>webpack.dev.js:</strong> This is simple configuration for dev mode, wich used webpack-dev-server with hot replacement and without compressing and difficult processing.
 * <strong>webpack.prod.js:</strong> This is hard configuration for production with JS, CSS, HTML and assets optimization.
 
 ### Main tasks:
@@ -44,13 +43,14 @@ We have 3 webpack configs wich use different features and level of code optimiza
 
 ### src's & dist's:
 * All src files located in app/
-* Main SCSS src files located in app/front/scss/pages/(page-name).scss
-* Main SCRIPT src files located in app/front/js/pages/(page-name).js
+* All pages files located in app/pages in Pug format
+* Main SCSS src files located in app/front-scss/pages/(page-name).scss
+* Main SCRIPT src files located in app/front-js/pages/(page-name).js
 * All compressed styles located in dist/styles/(page-name).css
 * All compressed scripts located in dist/scripts/(page-name).js
 * All src images placed in app/images/ folder
-* All compressed images placed in dist/resources/ folder
-* Components folder is opened for place there often used html part and sections
+* All compressed images placed in dist/resources/(folder)
+* Components folder is opened for place there often used html part and sections with Pug
 
 ## Issues
 No Issues at that time.
