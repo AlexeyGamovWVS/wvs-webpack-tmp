@@ -174,26 +174,26 @@ module.exports = {
           },
         })
     ),
-    // PAGES.map(
-    //   (page) =>
-    //     new FaviconsWebpackPlugin({
-    //       logo: "./app/images/logo.svg",
-    //       prefix: "",
-    //       publicPath: "./resources/favicons",
-    //       outputPath: "resources/favicons",
-    //       chunks: [page],
-    //       favicons: {
-    //         appName: "Proton WebSite",
-    //         appDescription: "Proton WebSite",
-    //         developerName: "WebValley Studio",
-    //         developerURL: "https://web-valley.ru",
-    //         background: "#fff",
-    //         theme_color: "#101A2D",
-    //       },
-    //       inject: (htmlPlugin) =>
-    //         path.basename(htmlPlugin.options.filename) === `${page}.html`,
-    //     })
-    // ),
+    PAGES.map(
+      (page) =>
+        new FaviconsWebpackPlugin({
+          logo: "./app/images/logo.svg",
+          prefix: "",
+          publicPath: "./resources/favicons",
+          outputPath: "resources/favicons",
+          chunks: [page],
+          favicons: {
+            appName: "Proton WebSite",
+            appDescription: "Proton WebSite",
+            developerName: "WebValley Studio",
+            developerURL: "https://web-valley.ru",
+            background: "#fff",
+            theme_color: "#101A2D",
+          },
+          inject: (htmlPlugin) =>
+            path.basename(htmlPlugin.options.filename) === `${page}.html`,
+        })
+    ),
     new MiniCssExtractPlugin({
       filename: path.join("styles", "[name].[contenthash:8].css"),
     }),
