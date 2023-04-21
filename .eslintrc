@@ -2,8 +2,20 @@
   "parser": "@babel/eslint-parser",
   "extends": ["airbnb", "prettier"],
   "plugins": ["prettier"],
+  "globals": {
+    "window": true
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
   "rules": {
+    "no-unused-vars": "warn",
     "no-console": "off",
+    "func-names": "off",
+    "no-process-exit": "off",
+    "object-shorthand": "off",
+    "class-methods-use-this": "off",
     "no-restricted-syntax": [
       "error",
       {
