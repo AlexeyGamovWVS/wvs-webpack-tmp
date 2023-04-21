@@ -2,25 +2,16 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable import/extensions */
 const path = require("path");
-const glob = require("glob");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
-const { PurgeCSSPlugin } = require("purgecss-webpack-plugin");
 const CircularDependencyPlugin = require("circular-dependency-plugin");
 const DuplicatePackageCheckerPlugin = require("duplicate-package-checker-webpack-plugin");
 const DashboardPlugin = require("webpack-dashboard/plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
 const FileManagerPlugin = require("filemanager-webpack-plugin");
 const PAGES = require("./webpack.data.js");
-
-const PATHS = {
-  src: path.join(__dirname, "app"),
-};
 
 module.exports = {
   entry: PAGES.reduce((config, page) => {
@@ -57,35 +48,7 @@ module.exports = {
       },
     },
   },
-  optimization: {
-    minimize: true,
-    splitChunks: {
-      chunks: "all",
-    },
-    minimizer: [
-      new ImageMinimizerPlugin({
-        minimizer: {
-          implementation: ImageMinimizerPlugin.imageminMinify,
-          options: {
-            plugins: [
-              ["gifsicle", { interlaced: true }],
-              ["jpegtran", { progressive: true }],
-              ["optipng", { optimizationLevel: 5 }],
-              ["svgo", { name: "preset-default" }],
-            ],
-          },
-        },
-      }),
-      new TerserPlugin({
-        terserOptions: { compress: true, format: { comments: false } },
-        extractComments: false,
-        parallel: true,
-      }),
-      new CssMinimizerPlugin({
-        parallel: true,
-      }),
-    ],
-  },
+
   module: {
     rules: [
       {
@@ -177,18 +140,6 @@ module.exports = {
           template: path.join(__dirname, "app", "pages", `${page}.pug`),
           filename: `${page}.html`,
           chunks: [page],
-          minify: {
-            removeComments: true,
-            collapseWhitespace: true,
-            removeRedundantAttributes: true,
-            useShortDoctype: true,
-            removeEmptyAttributes: true,
-            removeStyleLinkTypeAttributes: true,
-            keepClosingSlash: true,
-            minifyJS: true,
-            minifyCSS: true,
-            minifyURLs: true,
-          },
         })
     ),
     PAGES.map(
@@ -199,23 +150,12 @@ module.exports = {
           publicPath: "./resources/favicons",
           outputPath: "resources/favicons",
           chunks: [page],
-          favicons: {
-            appName: "Proton WebSite",
-            appDescription: "Proton WebSite",
-            developerName: "WebValley Studio",
-            developerURL: "https://web-valley.ru",
-            background: "#fff",
-            theme_color: "#101A2D",
-          },
           inject: (htmlPlugin) =>
             path.basename(htmlPlugin.options.filename) === `${page}.html`,
         })
     ),
     new MiniCssExtractPlugin({
       filename: path.join("styles", "[name].[contenthash:8].css"),
-    }),
-    new PurgeCSSPlugin({
-      paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
     }),
     new FileManagerPlugin({
       events: {
