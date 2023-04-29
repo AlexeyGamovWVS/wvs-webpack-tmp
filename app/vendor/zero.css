@@ -1,3 +1,4 @@
+/*! purgecss start ignore */
 /* Box sizing rules */
 *,
 *::before,
@@ -84,3 +85,4 @@ select {
     scroll-behavior: auto !important;
   }
 }
+/*! purgecss end ignore */
