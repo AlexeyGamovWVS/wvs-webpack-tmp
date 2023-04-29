@@ -26,7 +26,7 @@ module.exports = {
   }, {}),
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "scripts/[name].[contenthash:8].js",
+    filename: path.join("scripts", "[name].[contenthash:8].js"),
     library: "[name]",
     publicPath: "",
     assetModuleFilename: path.join("resources", "[name].[contenthash:8][ext]"),
