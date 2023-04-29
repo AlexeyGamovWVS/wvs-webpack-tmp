@@ -200,7 +200,7 @@ module.exports = {
         })
     ),
     new MiniCssExtractPlugin({
-      filename: path.join("styles", "[name].[contenthash:8].css"),
+      filename: "styles/[name].[contenthash:8].css",
     }),
     new PurgeCSSPlugin({
       paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
