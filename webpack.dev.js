@@ -63,7 +63,12 @@ module.exports = {
       {
         test: /\.(scss|css)$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: "../",
+            },
+          },
           "css-loader",
           "postcss-loader",
           "resolve-url-loader",
