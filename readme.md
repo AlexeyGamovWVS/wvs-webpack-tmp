@@ -9,7 +9,7 @@ Made by Alexey Gamov, [WebValley Studio](https://web-valley.ru/)
 ## :hammer_and_wrench: Установка
 * установите [NodeJS](https://nodejs.org/en/)
 * склонируйте сборку с помощью: ```git clone https://github.com/AlexeyGamovWVS/wvs-webpack-tmp.git``` или скачайте по ссылке [Download](https://github.com/AlexeyGamovWVS/wvs-webpack-tmp/archive/refs/heads/main.zip)
-* откройте скачанный стартер в редакторе и установите зависимости ```npm i```
+* откройте скаченный стартер в редакторе и установите зависимости ```npm i```
 * чтобы начать работу, введите ```npm run dev``` (режим разработки)
 * чтобы собрать проект, введите ```npm run build``` (режим сборки)
 * чтобы начать работу с объединенным бандлом, введите ```npm run dev:bundle``` (режим разработки бандла)
@@ -170,54 +170,54 @@ wvs-webpack-tmp
     * Декларируется и экспортируется главная функция ```export default function pageName() {...}``` вызывающая все импортированные и декларированные функции. Данная функция импортируется и вызывается в ```app/front-js/bundle.js``` 
     * Вызывается главная функция с отбивкой комментарием для бандл сборки
     * Пример JS страницы: 
-    ```javascript
-    /* START_EXCLUDE_JS_BUNDLE */
-    import "../../front-scss/pages/index.scss"; // импорт стилей для постраничной сборки
-    /* END_EXCLUDE_JS_BUNDLE */
-    import test from "../utils/utils"; // импорт функций из utils или components или библиотек
+        ```javascript
+        /* START_EXCLUDE_JS_BUNDLE */
+        import "../../front-scss/pages/index.scss"; // импорт стилей для постраничной сборки
+        /* END_EXCLUDE_JS_BUNDLE */
+        import test from "../utils/utils"; // импорт функций из utils или components или библиотек
 
-    // constants 
-    const CONFIG = {
-      TEXT: "I am index script",
-      NAME: "Alex",
-    };
+        // constants 
+        const CONFIG = {
+          TEXT: "I am index script",
+          NAME: "Alex",
+        };
 
-    // functions
-    function logConfig(config) {
-      Object.values(config).forEach((value) => {
-        console.log(value);
-      });
-    }
-    function destination() {
-      const summ = 1 + 15;
-      console.log(summ);
-    }
+        // functions
+        function logConfig(config) {
+          Object.values(config).forEach((value) => {
+            console.log(value);
+          });
+        }
+        function destination() {
+          const summ = 1 + 15;
+          console.log(summ);
+        }
 
-    // init
-    export default function mainPage() {
-      test();
-      logConfig(CONFIG);
-      destination();
-    }
+        // init
+        export default function mainPage() {
+          test();
+          logConfig(CONFIG);
+          destination();
+        }
 
-    /* START_EXCLUDE_JS_BUNDLE */
-    // запуск в постраничной сборке
-    mainPage();
-    /* END_EXCLUDE_JS_BUNDLE */
+        /* START_EXCLUDE_JS_BUNDLE */
+        // запуск в постраничной сборке
+        mainPage();
+        /* END_EXCLUDE_JS_BUNDLE */
 
-    ```
+        ```
     * Пример bundle.js для бандл-сборки:
-    ```javascript
-    import "../front-scss/bundle.scss";
-    import mainPage from "./pages";
-    import aboutPage from "./pages/about";
+        ```javascript
+        import "../front-scss/bundle.scss";
+        import mainPage from "./pages";
+        import aboutPage from "./pages/about";
 
-    function init() {
-      mainPage();
-      aboutPage();
-    }
-    init();
-    ```
+        function init() {
+          mainPage();
+          aboutPage();
+        }
+        init();
+        ```
 
 ### Шрифты
 * Шрифты находятся в папке ```app/vendor/fonts/[font_name]/```
@@ -230,89 +230,89 @@ wvs-webpack-tmp
 * изображения находятся в папке ```app/images```
     * изображения автоматически сжимаются при сборке и размещаются в папке ``` dist/resources/images```
     * изображения в pug встраиваются через тег img с использованием require, использование alt обязательно. Пример прямого встраиваения: ```img(src=require("../images/webpack_thumbnail.png") alt="thumbnail")```. Пример встраивания через объект констант (передачи в компонент):
-    ```pug
-    //- index.pug
-    //- ...
-    var certificateCardData={
-      title: 'Сертификат соответствия ISO 9001-2015',
-      text: 'Этот сертификат подтверждает, что наше производство соответствует международным стандартам качества, что позволяет нам выпускать продукцию, отвечающую высоким требованиям наших клиентов.',
-      imgSrc: require('../images/docAbout.svg'),
-      imgAlt: 'icon'
-    }
-    //- ...
-    html(lang= 'ru')
-      head 
-        +head(headData)
-      body.body 
-        +header(headerData)
-        main.main 
-          +certificate-about(certificateData)
-        +footer(footerData)
+        ```pug
+        //- index.pug
+        //- ...
+        var certificateCardData={
+          title: 'Сертификат соответствия ISO 9001-2015',
+          text: 'Этот сертификат подтверждает, что наше производство соответствует международным стандартам качества, что позволяет нам выпускать продукцию, отвечающую высоким требованиям наших клиентов.',
+          imgSrc: require('../images/docAbout.svg'),
+          imgAlt: 'icon'
+        }
+        //- ...
+        html(lang= 'ru')
+          head 
+            +head(headData)
+          body.body 
+            +header(headerData)
+            main.main 
+              +certificate-about(certificateData)
+            +footer(footerData)
 
-    //- certificate.pug
-    include ../../parts/roundseparator.pug
-    mixin certificate-about({caption, title, text, certificate})
-      section.section.certificate-about
-        .section__scaleble.certificate-about__scaleble
-          .container.certificate-about__container 
-            +rounded-sep({color: 'orange', caption})
-            .certificate-about__content
-              .certificate-about__hero
-                h2.h2.certificate-about__title.text-animation !{title} 
-                p.text_16.certificate-about__text.text-animation !{text}
-                img.certificate-about__icon.text-animation(src=certificate.imgSrc, alt=certificate.imgAlt)
-                h3.h5.certificate-about__card-title.text-animation !{certificate.title}
-                p.text_16.certificate-about__card-text.text-animation !{certificate.text}
-    ```
+        //- certificate.pug
+        include ../../parts/roundseparator.pug
+        mixin certificate-about({caption, title, text, certificate})
+          section.section.certificate-about
+            .section__scaleble.certificate-about__scaleble
+              .container.certificate-about__container 
+                +rounded-sep({color: 'orange', caption})
+                .certificate-about__content
+                  .certificate-about__hero
+                    h2.h2.certificate-about__title.text-animation !{title} 
+                    p.text_16.certificate-about__text.text-animation !{text}
+                    img.certificate-about__icon.text-animation(src=certificate.imgSrc, alt=certificate.imgAlt)
+                    h3.h5.certificate-about__card-title.text-animation !{certificate.title}
+                    p.text_16.certificate-about__card-text.text-animation !{certificate.text}
+        ```
     * Изображение для генерации фавиконок должно находиться в папке ```app/images``` и иметь размер не менее ```1080px x 1080px```. Также необходимо пройти по всем конфигурациям Webpack и установить путь до изображения в плагине ```FaviconsWebpackPlugin``` по ключу ```logo```. Favicons выгружаются в ```dist/recourses/favicons```
 
     * SVG автоматически встраиваются аналогично изображениям и выгружаются в ```dist/resources/svg```. Изменить стили svg можно по классу или по тегу через родительскую обёртку, например:
-    ```scss
-    .image {
-      fill: blue;
-    }
+        ```scss
+        .image {
+          fill: blue;
+        }
 
-    .image__box svg {
-      fill: blue;
-    }
-    ```
+        .image__box svg {
+          fill: blue;
+        }
+        ```
     Бывает такая ситуация, когда стили иконки поменять не получается. Это связано с тем, что при экспорте из Figma в svg добавляется лишний код — ширина, высота, заливка и тп. Например:
-    ```html
-    <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4.90918 4.04542L13.091 9.54088L4.90918 14.9545L4.90918 4.04542Z" fill="#1B1B1D"/>
-    </svg>
-    ```
-    Нужно удалить ```fill="none"``` и ```fill="#1B1B1D"```. Должно получиться так:
-    ```html
-    <svg width="18" height="19" viewBox="0 0 18 19" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4.90918 4.04542L13.091 9.54088L4.90918 14.9545L4.90918 4.04542Z"/>
-    </svg> 
-    ```
+        ```html
+        <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4.90918 4.04542L13.091 9.54088L4.90918 14.9545L4.90918 4.04542Z" fill="#1B1B1D"/>
+        </svg>
+        ```
+        Нужно удалить ```fill="none"``` и ```fill="#1B1B1D"```. Должно получиться так:
+        ```html
+        <svg width="18" height="19" viewBox="0 0 18 19" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4.90918 4.04542L13.091 9.54088L4.90918 14.9545L4.90918 4.04542Z"/>
+        </svg> 
+        ```
 
 ### Сторонние библиотеки
 * все сторонние библиотеки устанавливаются в папку ```node_modules```
     * для загрузки утилитарных библиотек, которые не будут в конечной сборке воспользуйтеcь командой ```npm i -D package_name``` или ```npm i package_name --save-dev```. Для загрузки библиотек, идущих в продакшн, например слайдеров, анимаций используйте ```npm i gsap swiper``` (gsap и swiper — названия пакетов)
     * для подключения JS-файлов библиотек импортируйте их в самом начале JS-файла, который использует скрипт и убедитесь, что вы не запихали импорт в игнорирование бандлером, например:
-    ```javascript
-    import swiper from "swiper";
-    /* START_EXCLUDE_JS_BUNDLE */
-    import "../../front-scss/pages/about.scss";
-    /* END_EXCLUDE_JS_BUNDLE */
-    import test from "../utils/utils";
+        ```javascript
+        import swiper from "swiper";
+        /* START_EXCLUDE_JS_BUNDLE */
+        import "../../front-scss/pages/about.scss";
+        /* END_EXCLUDE_JS_BUNDLE */
+        import test from "../utils/utils";
 
-    // constants
-    // ...
+        // constants
+        // ...
 
-    // functions
-    // ...
+        // functions
+        // ...
 
-    // init function page()
-    // ...
+        // init function page()
+        // ...
 
-    /* START_EXCLUDE_JS_BUNDLE */
-    page()
-    /* END_EXCLUDE_JS_BUNDLE */
-    ```
+        /* START_EXCLUDE_JS_BUNDLE */
+        page()
+        /* END_EXCLUDE_JS_BUNDLE */
+        ```
     * для подключения стилевых файлов библиотек импортируйте их в файл ```app/vendor/libs.scss```
     * JS-файлы и стилевые файлы библиотек самостоятельно изменять нельзя. Для работы со стилями используйте дополнительные классы или их комбинацию.
 
