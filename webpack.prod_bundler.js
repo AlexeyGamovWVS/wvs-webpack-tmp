@@ -2,12 +2,12 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable import/extensions */
 const path = require("path");
-// const glob = require("glob");
+const glob = require("glob");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
-// const { PurgeCSSPlugin } = require("purgecss-webpack-plugin");
+const { PurgeCSSPlugin } = require("purgecss-webpack-plugin");
 const CircularDependencyPlugin = require("circular-dependency-plugin");
 const DuplicatePackageCheckerPlugin = require("duplicate-package-checker-webpack-plugin");
 const DashboardPlugin = require("webpack-dashboard/plugin");
@@ -18,33 +18,21 @@ const ESLintPlugin = require("eslint-webpack-plugin");
 const FileManagerPlugin = require("filemanager-webpack-plugin");
 const PAGES = require("./webpack.data.js");
 
-// const PATHS = {
-//   src: path.join(__dirname, "app"),
-// };
+const PATHS = {
+  src: path.join(__dirname, "app"),
+};
 
 module.exports = {
-  entry: PAGES.reduce((config, page) => {
-    config[page] = path.resolve(
-      __dirname,
-      "app",
-      "front-js",
-      "pages",
-      `${page}.js`
-    );
-    return config;
-  }, {}),
+  entry: path.join(__dirname, "app", "front-js", "bundle.js"),
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: path.join("scripts", "[name].[contenthash:8].js"),
+    path: path.join(__dirname, "dist"),
+    filename: "main.js",
     library: "[name]",
     publicPath: "",
-    assetModuleFilename: path.join("resources", "[name].[contenthash:8][ext]"),
+    assetModuleFilename: path.join("resources", "[name][ext]"),
   },
   optimization: {
     minimize: true,
-    splitChunks: {
-      chunks: "all",
-    },
     minimizer: [
       new ImageMinimizerPlugin({
         minimizer: {
@@ -73,21 +61,32 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        use: ["babel-loader", "source-map-loader"],
+        use: [
+          "babel-loader",
+          "source-map-loader",
+          {
+            loader: "webpack-strip-block",
+            options: {
+              start: "START_EXCLUDE_JS_BUNDLE",
+              end: "END_EXCLUDE_JS_BUNDLE",
+            },
+          },
+        ],
         exclude: /node_modules/,
       },
       {
         test: /\.pug$/,
         loader: "pug-loader",
+        // раскомментировать для получения html в несжатом виде
+        // options: {
+        //   pretty: true,
+        // },
       },
       {
         test: /\.(scss|css)$/,
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: "../",
-            },
           },
           "css-loader",
           "postcss-loader",
@@ -98,68 +97,57 @@ module.exports = {
               sourceMap: true,
             },
           },
+          {
+            loader: "string-replace-loader",
+            options: {
+              search:
+                /\/\*\s*START_EXCLUDE_STYLE_BUNDLE\s*\*\/([\s\S]*?)\/\*\s*END_EXCLUDE_STYLE_BUNDLE\s*\*\//gi,
+              replace: "",
+              // strict: true,
+            },
+          },
         ],
       },
       {
         test: /\.(png|jpg|jpeg)$/i,
         type: "asset/resource",
         generator: {
-          filename: path.join(
-            "resources",
-            "images",
-            "[name].[contenthash:8][ext]"
-          ),
+          filename: path.join("resources", "images", "[name][ext]"),
         },
       },
       {
         test: /\.(gif)$/i,
         type: "asset/resource",
         generator: {
-          filename: path.join(
-            "resources",
-            "gif",
-            "[name].[contenthash:8][ext]"
-          ),
+          filename: path.join("resources", "gif", "[name][ext]"),
         },
       },
       {
         test: /\.svg$/,
         type: "asset/resource",
         generator: {
-          filename: path.join(
-            "resources",
-            "svg",
-            "[name].[contenthash:8][ext]"
-          ),
+          filename: path.join("resources", "svg", "[name][ext]"),
         },
       },
       {
         test: /\.mp4$/,
         type: "asset/resource",
         generator: {
-          filename: path.join(
-            "resources",
-            "videos",
-            "[name].[contenthash:8][ext]"
-          ),
+          filename: path.join("resources", "videos", "[name][ext]"),
         },
       },
       {
         test: /\.(woff(2)?|eot|ttf|otf)$/,
         type: "asset/resource",
         generator: {
-          filename: path.join(
-            "resources",
-            "fonts",
-            "[name].[contenthash:8][ext]"
-          ),
+          filename: path.join("resources", "fonts", "[name][ext]"),
         },
       },
       {
         test: /\.(glb|gltf)$/,
         type: "asset/resource",
         generator: {
-          filename: path.join("models", "[name].[contenthash:8][ext]"),
+          filename: path.join("models", "[name][ext]"),
         },
       },
     ],
@@ -171,7 +159,6 @@ module.exports = {
           inject: "body",
           template: path.join(__dirname, "app", "pages", `${page}.pug`),
           filename: `${page}.html`,
-          chunks: [page],
           minify: {
             removeComments: true,
             collapseWhitespace: true,
@@ -193,7 +180,6 @@ module.exports = {
           prefix: "",
           publicPath: "./resources/favicons",
           outputPath: "resources/favicons",
-          chunks: [page],
           favicons: {
             appName: "Proton WebSite",
             appDescription: "Proton WebSite",
@@ -206,12 +192,10 @@ module.exports = {
             path.basename(htmlPlugin.options.filename) === `${page}.html`,
         })
     ),
-    new MiniCssExtractPlugin({
-      filename: "styles/[name].[contenthash:8].css",
+    new MiniCssExtractPlugin(),
+    new PurgeCSSPlugin({
+      paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
     }),
-    // new PurgeCSSPlugin({
-    //   paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
-    // }),
     new FileManagerPlugin({
       events: {
         onStart: {

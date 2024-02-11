@@ -12,6 +12,8 @@
     "dbdev": "webpack-dashboard -- webpack --mode development serve --config webpack.dev.js",
     "build": "webpack --mode production --config webpack.prod.js",
     "dev": "webpack serve --mode development --config webpack.dev.js",
+    "build:bundle": "webpack --mode production --config webpack.prod_bundler.js",
+    "dev:bundle": "webpack serve --mode development --config webpack.dev_bundler.js",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
@@ -71,13 +73,15 @@
     "sass": "^1.62.0",
     "sass-loader": "^13.2.2",
     "source-map-loader": "^4.0.1",
+    "string-replace-loader": "^3.1.0",
     "svgo": "^3.0.2",
     "terser-webpack-plugin": "^5.3.7",
     "webpack": "^5.80.0",
     "webpack-cli": "^5.0.1",
     "webpack-dashboard": "^3.3.7",
     "webpack-dev-server": "^4.13.3",
-    "webpack-merge": "^5.8.0"
+    "webpack-merge": "^5.8.0",
+    "webpack-strip-block": "^0.3.0"
   },
   "dependencies": {
     "core-js": "^3.30.1",
