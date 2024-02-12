@@ -86,12 +86,10 @@ module.exports = {
             },
           },
           {
-            loader: "string-replace-loader",
+            loader: "webpack-strip-block",
             options: {
-              search:
-                /\/\*\s*START_EXCLUDE_STYLE_BUNDLE\s*\*\/([\s\S]*?)\/\*\s*END_EXCLUDE_STYLE_BUNDLE\s*\*\//gi,
-              replace: "",
-              // strict: true,
+              start: "START_EXCLUDE_STYLE_BUNDLE",
+              end: "END_EXCLUDE_STYLE_BUNDLE",
             },
           },
         ],

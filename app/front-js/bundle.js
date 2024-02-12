@@ -1,4 +1,4 @@
-import "../front-scss/bundle.scss";
+import "../front-scss/bundle.styles";
 import mainPage from "./pages";
 import aboutPage from "./pages/about";
 
