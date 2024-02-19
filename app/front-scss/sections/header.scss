@@ -1,7 +1,8 @@
+@import "../utils/constants.scss";
 /* START_EXCLUDE_STYLE_BUNDLE */
 @import "../parts/logo/logo.scss";
 /* END_EXCLUDE_STYLE_BUNDLE */
-$font-color: white;
+
 .title {
   margin-top: 10%;
   font-family: "Inter", Arial, Helvetica, sans-serif;
@@ -40,4 +41,3 @@ $font-color: white;
     margin-top: 200px;
   }
 }
-
